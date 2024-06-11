@@ -7,7 +7,7 @@ myProfileEditButton.onclick = async function () {
   informationForm.remove()
   const url = window.location.pathname
   const userId = url.substring(url.indexOf('e/') + 2, url.length + 1)
-  const userData = await axios(`http://localhost:8000/user/${userId}`)
+  const userData = await axios(`https://gsoinventorysystem.onrender.com/user/${userId}`)
   console.log(userId)
   const myInfoEditForm = document.createElement('form')
   myInfoEditForm.action = `/user/myprofile/${userId}?_method=PUT`
@@ -108,7 +108,7 @@ myProfileEditButton.onclick = async function () {
       contactInput.classList.add('ring-2','ring-slate-500','rounded-md','px-2','w-full','py-1')
     }
     if(k == 4) {
-      const department = await axios(`http://localhost:8000/department`)
+      const department = await axios(`https://gsoinventorysystem.onrender.com/department`)
       const departmentLabel = document.createElement('label')
       departmentLabel.setAttribute('for','department')
       departmentLabel.innerHTML = 'Department :'

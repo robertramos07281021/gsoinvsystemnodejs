@@ -20,7 +20,7 @@ Array.from(deleteDeptButton).forEach((element, index) => {
 
   element.onclick =async function () {
     const deptId = deptData[index].getAttribute('data-dept-id');
-    const getDept = await axios(`http://localhost:8000/department/${deptId}`);
+    const getDept = await axios(`https://gsoinventorysystem.onrender.com/department/${deptId}`);
     const deptDeleteBgMessage = document.createElement('div')
     deptDeleteBgMessage.classList.add('absolute','left-0','top-0','h-screen','w-screen', 'justify-center', 'items-center','z-20','flex');
     document.body.appendChild(deptDeleteBgMessage);
@@ -78,7 +78,7 @@ const saveNewNameDept = document.getElementById('saveNewNameDept')
 
 Array.from(editDeptButton).forEach(async (element,index) => {
   const deptId = deptData[index].getAttribute('data-dept-id');
-  const findDept = await axios(`http://localhost:8000/department/${deptId}`)
+  const findDept = await axios(`https://gsoinventorysystem.onrender.com/department/${deptId}`)
   element.onclick = function() {
     prevNameDept.innerHTML =  findDept.data.department
     saveNewNameDept.setAttribute('data-dept-id',deptId)
@@ -393,7 +393,7 @@ Array.from(historyDetailsButton).forEach(async (element, index) =>{
   element.onclick = async function () {
     const historyId = historyDetails[index].getAttribute('data-history-id');
   
-    const history = await axios(`http://localhost:8000/history/${historyId}`)
+    const history = await axios(`https://gsoinventorysystem.onrender.com/history/${historyId}`)
     const historyDetailsModalBg = document.createElement('div');
     historyDetailsModalBg.classList.add('absolute','left-0','top-0','h-screen','w-screen','backdrop-blur-sm','bg-white/10', 'justify-center', 'items-center','z-20','flex');
     document.body.appendChild(historyDetailsModalBg);

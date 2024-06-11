@@ -14,8 +14,8 @@ const actionField = document.getElementById('actionField')
 // Deploy button
 Array.from(deployButton).forEach(async(element, index) => {
   const unitId = availableItems[index].getAttribute('data-unit-id');
-  const findUnit = await axios(`http://localhost:8000/unit/available/${unitId}`);
-  const findDepartment = await axios('http://localhost:8000/department');
+  const findUnit = await axios(`https://gsoinventorysystem.onrender.com/unit/available/${unitId}`);
+  const findDepartment = await axios('https://gsoinventorysystem.onrender.com/department');
   const department = findDepartment.data
   const unit = findUnit.data;
 
@@ -274,7 +274,7 @@ Array.from(deployButton).forEach(async(element, index) => {
 
 Array.from(editButton).forEach( async(button,index) => {
   const unitId = availableItems[index].getAttribute('data-unit-id');
-  const findUnit = await axios(`http://localhost:8000/unit/available/${unitId}`)
+  const findUnit = await axios(`https://gsoinventorysystem.onrender.com/unit/available/${unitId}`)
   const unit = findUnit.data
   const unitData = [
     unit.item.name,
@@ -586,7 +586,7 @@ Array.from(editButton).forEach( async(button,index) => {
 // Delete Button
 Array.from(deleteButton).forEach(async (element,index) => {
   const unitId = availableItems[index].getAttribute('data-unit-id');
-  const findUnit = await axios(`http://localhost:8000/unit/available/${unitId}`)
+  const findUnit = await axios(`https://gsoinventorysystem.onrender.com/unit/available/${unitId}`)
   const unit = findUnit.data
   element.onmouseover = function() {
     availableItems[index].classList.add('bg-red-500/20')
