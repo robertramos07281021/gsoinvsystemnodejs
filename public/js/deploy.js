@@ -47,7 +47,7 @@ addItem.addEventListener('submit',(e)=> {
 Array.from(editButton).forEach(async(element,index)=> {
   const deployedUnit = document.getElementsByClassName('deployedUnit')
   const deployedId = deployedUnit[index].getAttribute('data-deployed-id')
-  const findDepartment = await axios(`https://gsoinventorysystem.onrender.com/items/manage/deploy/${deployedId}`);
+  const findDepartment = await axios(`https://gsoinvsystemnodejs.onrender.com/items/manage/deploy/${deployedId}`);
   const deployed = findDepartment.data;
   const data = [
     deployed.item.name,
@@ -291,7 +291,7 @@ Array.from(detailsButton).forEach(async(element,index)=> {
 
   const deployedUnit = document.getElementsByClassName('deployedUnit')
   const deployedId = deployedUnit[index].getAttribute('data-deployed-id')
-  const findDeployed = await axios(`https://gsoinventorysystem.onrender.com/items/manage/deploy/${deployedId}`);
+  const findDeployed = await axios(`https://gsoinvsystemnodejs.onrender.com/items/manage/deploy/${deployedId}`);
   const details = findDeployed.data;
   const data = [
     details.item.name,
@@ -381,7 +381,7 @@ Array.from(detailsButton).forEach(async(element,index)=> {
 Array.from(deleteButton).forEach(async(element,index)=> {
   const deployedUnit = document.getElementsByClassName('deployedUnit')
   const deployedId = deployedUnit[index].getAttribute('data-deployed-id')
-  const findDeployed = await axios(`https://gsoinventorysystem.onrender.com/items/manage/deploy/${deployedId}`);
+  const findDeployed = await axios(`https://gsoinvsystemnodejs.onrender.com/items/manage/deploy/${deployedId}`);
   const chooseDept = document.getElementById('chooseDept')
 
   element.onmouseover = function() {

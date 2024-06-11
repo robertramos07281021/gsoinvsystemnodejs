@@ -4,7 +4,7 @@ const detailsButton = document.getElementsByClassName('detailsButton')
 
 Array.from(approvalButton).forEach(async(element,index)=> {
   const approvalId = forApprovalData[index].getAttribute('data-request-approval')
-  const approvalData = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${approvalId}`);
+  const approvalData = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${approvalId}`);
   const request = approvalData.data;
 
 
@@ -49,7 +49,7 @@ Array.from(approvalButton).forEach(async(element,index)=> {
 Array.from(detailsButton).forEach(async(element,index) => {
 
   const approvalId = forApprovalData[index].getAttribute('data-request-approval')
-  const approvalData = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${approvalId}`);
+  const approvalData = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${approvalId}`);
   const request = approvalData.data
   const requestDate = (new Date(request.createdAt).getMonth() + 1)  + '/' + new Date(request.createdAt).getDate() + '/' + new Date(request.createdAt).getFullYear()
   
@@ -220,7 +220,7 @@ const forReceiving = document.getElementsByClassName('forReceiving')
 
 Array.from(forReceivingDetailsButton).forEach(async(element,index) => {
   const forReceivingId = forReceiving[index].getAttribute('data-receiving-id')
-  const forReceivingData = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${forReceivingId}`);
+  const forReceivingData = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${forReceivingId}`);
   const request = forReceivingData.data
   const requestDate = (new Date(request.createdAt).getMonth() + 1)  + '/' + new Date(request.createdAt).getDate() + '/' + new Date(request.createdAt).getFullYear()
   const approvedDate = (new Date(request.approvedate).getMonth() + 1)  + '/' + new Date(request.approvedate).getDate() + '/' + new Date(request.approvedate).getFullYear()
@@ -467,7 +467,7 @@ const completeReceivedButton = document.getElementsByClassName('completeReceived
 
 Array.from(completeReceivedButton).forEach(async(element,index) => {
   const completeReceivedId = completeReceivedData[index].getAttribute('data-received-id')
-  const receivedData = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${completeReceivedId}`);
+  const receivedData = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${completeReceivedId}`);
   const request = receivedData.data
   const requestDate = (new Date(request.createdAt).getMonth() + 1)  + '/' + new Date(request.createdAt).getDate() + '/' + new Date(request.createdAt).getFullYear()
   const approvedDate = (new Date(request.approvedate).getMonth() + 1)  + '/' + new Date(request.approvedate).getDate() + '/' + new Date(request.approvedate).getFullYear()

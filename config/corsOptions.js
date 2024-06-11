@@ -1,6 +1,6 @@
 const allowedOrigins = [
   'https://localhost:5000',
-  'https://gsoinventorysystem.onrender.com'
+  'https://gsoinvsystemnodejs.onrender.com'
 ]
 
 const corsOptions = {

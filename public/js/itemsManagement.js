@@ -14,8 +14,8 @@ const actionField = document.getElementById('actionField')
 // Deploy button
 Array.from(deployButton).forEach(async(element, index) => {
   const unitId = availableItems[index].getAttribute('data-unit-id');
-  const findUnit = await axios(`https://gsoinventorysystem.onrender.com/unit/available/${unitId}`);
-  const findDepartment = await axios('https://gsoinventorysystem.onrender.com/department');
+  const findUnit = await axios(`https://gsoinvsystemnodejs.onrender.com/unit/available/${unitId}`);
+  const findDepartment = await axios('https://gsoinvsystemnodejs.onrender.com/department');
   const department = findDepartment.data
   const unit = findUnit.data;
 

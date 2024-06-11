@@ -10,7 +10,7 @@ for(i = 0; i < requestButton.length; i++) {
   const itemId = deployedItemName[i].getAttribute('data-dept-deploys');
   // =============================================================================Create Request Form  
   requestButton[i].onclick = async function () {
-    const deployData = await axios(`https://gsoinventorysystem.onrender.com/items/manage/deploy/${itemId}`)
+    const deployData = await axios(`https://gsoinvsystemnodejs.onrender.com/items/manage/deploy/${itemId}`)
 
     const requestFormDiv = document.createElement('div');
     requestFormDiv.setAttribute('id','requestFormDiv');
@@ -191,7 +191,7 @@ const receivingData = document.getElementsByClassName('receivingData')
 for (let l = 0; l < ReceiveBtn.length; l++) {
   ReceiveBtn[l].onclick = async function () {
     const dataAttribute = receivingData[l].getAttribute('data-request-id');
-    const res = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${dataAttribute}`)
+    const res = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${dataAttribute}`)
 
     const forReceive = document.createElement('div')
     forReceiving.appendChild(forReceive);
@@ -352,7 +352,7 @@ for(let k = 0; k < completeReceiveBtn.length; k++) {
   completeReceiveBtn[k].onclick = async function () {
     completeReceivedDetailsBg.classList.remove('hidden')
     const receivedDataAttribute = completeReceiveData[k].getAttribute('data-complete-receive');
-    const completeReceiveRes = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${receivedDataAttribute}`)
+    const completeReceiveRes = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${receivedDataAttribute}`)
     const receivedTrackingNo = document.getElementById('receivedTrackingNo')
     const receivedItemName = document.getElementById('receivedItemName')
     const receivedItemCode = document.getElementById('receivedItemCode')
@@ -385,7 +385,7 @@ const editMyRequestButton = document.getElementById('editMyRequestButton');
 for(let h = 0; h < editMyRequestBtn.length; h++) {
   const requestEditDataAttribute = requestData[h].getAttribute('data-myrequest-id');
   editMyRequestBtn[h].onclick = async function () {
-    const requestEditData = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${requestEditDataAttribute}`);
+    const requestEditData = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${requestEditDataAttribute}`);
     console.log(requestEditData.data)
     editRequestFormDiv.classList.remove('hidden');
     requestItemName.innerHTML = requestEditData.data.item.name;
@@ -452,7 +452,7 @@ for(let t = 0; t < deleteThisRequestBtn.length; t++) {
   deleteThisRequestBtn[t].onclick = async function() {
     const requestDeleteDataAttribute = requestData[t].getAttribute('data-myrequest-id');
     deleteRequestBg.classList.remove('hidden')
-    const requestEditData = await axios(`https://gsoinventorysystem.onrender.com/user/requests/${requestDeleteDataAttribute}`);
+    const requestEditData = await axios(`https://gsoinvsystemnodejs.onrender.com/user/requests/${requestDeleteDataAttribute}`);
     deleteMessage.innerHTML = `You want to delete this request with Tracking No. ${requestEditData.data.tracking} ?`;
     deleteRequestForm.action = `/user/myrequest/requests/delete/${requestEditData.data._id}?_method=DELETE`;
     deleteRequestBtn.formAction = `/user/myrequest/requests/delete/${requestEditData.data._id}?_method=DELETE`;
