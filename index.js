@@ -33,7 +33,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 const sessionConfig = {
   coockie: {
