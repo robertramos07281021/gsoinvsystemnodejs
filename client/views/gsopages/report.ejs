@@ -1,0 +1,146 @@
+<% layout('/layouts/boilerplate') %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/adminnavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+  <div class="flex justify-between text-black">
+    <p class="font-semibold text-2xl flex flex-cols text-white">Reports</p>
+    <p class="font-semibold text-white">Welcome Admin <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class="h-full flex mt-1 gap-5">
+
+    <div class="flex flex-col gap-5">
+      <div class="w-72 h-44 bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-5">
+        <div>
+          <div class="flex items-center justify-between relative ">
+      
+            <label for="dateQuery" class="text-xl font-semibold ">Date :</label>  
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" class="mt-2 stroke-2 fill-red-500 peer cursor-default "><path d="M479.79-288q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM444-432h72v-240h-72v240Zm36.28 336Q401-96 331-126t-122.5-82.5Q156-261 126-330.96t-30-149.5Q96-560 126-629.5q30-69.5 82.5-122T330.96-834q69.96-30 149.5-30t149.04 30q69.5 30 122 82.5T834-629.28q30 69.73 30 149Q864-401 834-331t-82.5 122.5Q699-156 629.28-126q-69.73 30-149 30Zm-.28-72q130 0 221-91t91-221q0-130-91-221t-221-91q-130 0-221 91t-91 221q0 130 91 221t221 91Zm0-312Z"/></svg>
+            <p class=" bg-white peer-hover:flex absolute w-[400px] h-12 -bottom-7 -right-[400px] border p-2  ring-2 ring-inset ring-offset-2 ring-red-500 hidden rounded-xl border-4 border-red-300 indent-5 flex  font-semibold">Date is avalable on Complete Transaction only.</p>
+          </div>
+          <input type="date" name="dateQuery" id="dateQuery" class="w-full p-2 border-2 rounded-md mt-2" >
+          <div class="text-center mt-4"> 
+            <a href="/reports/available" target="_blank" id="printPreview">
+              <button class="border px-3 h-10 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-blue-500 font-bold text-white hover:bg-white hover:text-blue-500 hover:shadow-[2px_2px_0px_0px_blue] hover:border-blue-500 transition-ease-in duration-300">Print Preview</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="w-72 h-52 bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl flex flex-col justify-center items-center text-lg font-bold ">
+        <div class="w-52 flex justify-center py-3 cursor-pointer bg-red-300/20 rounded-md hover:bg-red-300/20 transition-ease-in duration-300 printSelection" data-content="availableUnits">
+          Available Units
+        </div>
+        <div class="w-52 flex justify-center py-3 cursor-pointer rounded-md hover:bg-red-300/20 transition-ease-in duration-300 printSelection" data-content="deployedUnits">
+          Deployed Units
+        </div>
+        <div class="w-52 flex justify-center py-3 cursor-pointer rounded-md hover:bg-red-300/20 transition-ease-in duration-300 printSelection" data-content="completeTransaction">
+          Complete Transaction
+        </div>
+      </div>
+    </div>
+
+    <!--================================================================ AVAILABLE UNITS -->
+    <div class="w-full h-full">
+
+      <div class="w-3/4 h-full flex flex-col bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-5 contentDiv" data-content="availableUnits">
+        <h1 class="text-2xl font-bold mb-2">
+          Available Units  
+        </h1>
+        <div class="grid grid-cols-3 border-y-2 text-center py-2 border-black font-bold text-lg">
+          <div>Item Name</div>
+          <div>Item Code</div>
+          <div>Quantity</div>
+        </div>
+        <div class="h-full overflow-hidden overflow-y-auto">
+          <% for(let unit of units) {%>
+            <div class="grid grid-cols-3 text-center py-2 font-semibold even:bg-slate-100">
+              <div><%= unit.item.name %></div>
+              <div><%= unit.item.code %></div>
+              <div><%= unit.qty %></div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!--================================================================ DEPLOYED UNITS  -->
+      <div class="h-full flex flex-col bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-5 hidden contentDiv"  data-content="deployedUnits">
+        <div class="flex justify-between mb-2">
+          <h1 class="text-2xl font-bold">
+            Deployed Units
+          </h1>
+          <select name="deployedDept" id="deployedDept" class="ring-2 ring-slate-500 rounded w-96 px-2">
+            <option value="">Select Dept</option>
+            <% for(let deptWithDeploy of deptWithDeploys) {%>
+              <option value="<%=deptWithDeploy%>"><%=deptWithDeploy%></option>
+            <% } %>
+          </select>
+        </div>
+        
+        <div class="grid grid-cols-4 border-y-2 text-center py-2 border-black font-bold text-lg">
+          <div>Item Name</div>
+          <div>Item Code</div>
+          <div>Department</div>
+          <div>Quantity</div>
+        </div>
+
+        <div class="2xl:h-[533px]  xl:h-[593px] overflow-y-auto overflow-hidden">
+          <% for(let deployed of deployeds) { %>
+            <div class="grid grid-cols-4 py-2 font-semibold even:bg-slate-100 text-center deployedUnitData">
+              <div><%= deployed.item.name %></div>
+              <div><%= deployed.item.code %></div>
+              <div class="deployDept"><%= deployed.department.department %></div>
+              <div><%= deployed.qty %></div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+        
+
+        <!--======================================================e COMPLETE TRANSACTION -->
+      <div class="h-full flex flex-col bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-5 hidden contentDiv" data-content="completeTransaction" id="completeTransaction" >
+
+        <div class="flex justify-between">
+          <h1 class="text-2xl font-bold">
+            Complete Transaction
+          </h1>
+          <select name="completeDept" id="completeDept" class="ring-2 ring-slate-500 rounded w-96 px-2">
+            <option value="">Select Dept</option>
+            <% for(let depts of completeTransactionDepts) {%>
+              <option value="<%=depts%>"><%=depts%></option>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-6 text-center border-y-2 py-2 border-black font-bold text-lg mt-2">
+          <div >Tracking no</div>
+          <div >Item name</div>
+          <div >Dept</div>
+          <div >Username</div>
+          <div>Quantity</div>
+          <div >Receive Date</div>
+        </div>
+
+        <div class="2xl:h-[533px] xl:h-[593px] overflow-y-auto overflow-hidden">
+          <% for(let request of requests) { %>
+            <div class="grid grid-cols-6 text-center py-2 font-semibold even:bg-slate-100">
+              <div class="font-mono"><%=request.tracking %></div>
+              <div><%= request.item.name %></div>
+              <div><%= request.department.department %></div>
+              <div><%= request.user.username %></div>
+              <div><%= request.qty %></div>
+              <div><%= new Date(request.receivedate).getMonth() + 1 + '/' + new Date(request.receivedate).getDate() + '/' +  new Date(request.receivedate).getFullYear()%></div>
+
+            </div>
+          <% } %>
+        </div>
+
+      </div>
+
+    </div>
+    
+  </div>
+  <script src="/js/adminReport.js"></script>
+</main>

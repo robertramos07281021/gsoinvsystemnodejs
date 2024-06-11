@@ -1,0 +1,70 @@
+<% layout('/layouts/boilerplate'); %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/adminnavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+  <div class="flex justify-between text-white mb-1">
+    <p class="font-semibold text-2xl flex flex-cols text-white" id="pageTitle">My Profile</p>
+    <p class="font-semibold text-text-black">Welcome Admin <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class=" h-full flex justify-center gap-5" id="contentDiv">
+
+      <div class="w-2/4 h-full bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] grid content-center gap-5 py-5 px-10" id="accountInfoDiv">
+        <h1 class="2x:text-3xl xl:text-xl font-bold flex justify-center mb-5"><%= user.username %> Information</h1>
+        <div class="flex gap-5">
+          <div class="w-full">
+            <p class="text-xl font-bold">Firstname :</p>
+            <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1) %> </p>
+          </div>
+          <div class="w-full">
+            <p class="text-xl font-bold">Lastname :</p>
+            <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1) %></p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xl font-bold">Contact :</p>
+          <p class="border-2 border-slate-500 rounded-lg py-1 px-2">0<%= user.phone %></p>
+        </div>
+        <div>
+          <p class="text-xl font-bold">Email :</p>
+          <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.email %></p>
+        </div>
+        <div>
+          <p class="text-xl font-bold">Address :</p>
+          <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.address %></p>
+        </div>
+        
+        <div class="flex gap-5">
+          <div class="w-full">
+            <p class="text-xl font-bold">Role :</p>
+            <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.role %> </p>
+          </div>
+          <div class="w-full">
+            <p class="text-xl font-bold">Status :</p>
+            <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.status %></p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="w-full">
+            <p class="text-xl font-bold">Department :</p>
+            <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.department %></p>
+          </div>
+          <div class="w-full">
+            <p class="text-xl font-bold">Username :</p>
+            <p class="border-2 border-slate-500 rounded-lg py-1 px-2"><%= user.username %></p>
+          </div>
+        </div>
+
+        <div class="flex justify-center ">
+          <a href="/admin/myprofile/update/<%=user._id %>">
+            <button id="editUserButton" class="border-2 h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md border-orange-300 bg-orange-500 text-white font-bold hover:bg-white hover:border-orange-500 hover:text-orange-500 hover:shadow-[2px_2px_0px_0px_rgba(249,115,22,1)]   transition-ease-in duration-300">Edit</button>
+          </a>
+        </div>
+        
+      </div>
+  </div>
+</main>
+

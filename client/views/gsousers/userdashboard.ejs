@@ -1,0 +1,101 @@
+<% layout('/layouts/boilerplate') %>
+
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/usernavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+  <div class="flex justify-between text-white">
+    <p class="font-semibold text-2xl flex flex-cols">Dashboard</p>
+    <p class="font-semibold">Welcome <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class=" h-full grid grid-cols-2 gap-5 grid-rows-2 mt-1">
+    <div class="shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl bg-white p-4 grid grid-row-12">
+  
+        <h1 class="font-bold text-lg ">Your Department Units</h1>
+        <div class="grid grid-cols-3 text-center font-semibold border-b-4 border-black">
+          <div>Item Name</div>
+          <div>Item Code</div>
+
+          <div>Quantity</div>
+        </div>
+        <div class="2xl:h-[233px] xl:h-[238px] overflow-hidden overflow-y-auto">
+        <% for(let deployedUnitOnYourDept of deployedUnitsOnYourDept) { %>
+          <div class="grid grid-cols-3 py-2.5 border-b-2 last:border-0 text-sm mx-2 flex items-center">
+            <div class="text-center"><%= deployedUnitOnYourDept.item.name %></div>
+            <div class="text-center"><%= deployedUnitOnYourDept.item.code %></div>
+            <div class="text-center"><%= deployedUnitOnYourDept.qty %></div>
+          </div>
+        <% } %>
+      </div>
+    
+    </div>
+
+
+    <div class="shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl bg-white row-start-2 p-4 flex flex-col ">
+      <h1 class="font-bold text-lg">Available Units</h1>
+      <div class="grid grid-cols-4 text-center font-semibold border-b-4 border-black">
+        <div>Item Name</div>
+        <div>Item Code</div>
+        <div>Item Description</div>
+        <div>Quantity</div>
+      </div>
+      <div class="2xl:h-[233px] xl:h-[238px] overflow-hidden overflow-y-auto">
+        <% for(let availableUnit of availableUnits) {%>
+          <div class="grid grid-cols-4 py-1.5 border-b-2 last:border-0 text-sm mx-2 flex items-center">
+            <div class="text-center"><%= availableUnit.item.name %></div>
+            <div class="text-center"><%= availableUnit.item.code %></div>
+            <div class=" flex justify-center">
+              <button class="w-20 py-0.5 border peer bg-green-500 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-ease-in duration-300 font-bold border border-green-300 hover:text-green-500 hover:shadow-[2px_2px_0px_0px_rgba(34,197,94,1)] text-white hover:border-green-300">Click</button>
+              <div class="hidden peer-focus:flex absolute top-0 left-0 w-screen h-screen justify-center items-center">
+                <div class="w-80 px-4 py-6 bg-white rounded-md flex items-center justify-center border-t-[30px] border-black border-x-4 border-b-4 flex-col gap-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)]">
+                  <div>
+                    <div class="text-2xl w-full font-bold"><%=availableUnit.item.name %></div>
+                    <div class="font-semibold text-sm text-center">(Description)</div>
+                  </div>
+                  <div class="text-justify px-4 indent-5">
+                    <%= availableUnit.item.description %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center"><%= availableUnit.qty %></div>
+          </div>
+          <% } %>
+      </div>
+    </div>
+    
+    <div class="shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl bg-white row-span-2 p-5 flex flex-col">
+      <div class="flex justify-between items-center">
+        <h1 class="font-bold text-lg">Other Department Units</h1>
+          <select name="deployedFilter" id="deployedFilter" class="w-56 rounded-md border-2 border-black/50 font-semibold py-1 px-4">
+            <option value="">All Departments</option>
+          <% for(let dept of deptsWithDeploy) {%>
+            <option value="<%= dept.department %>"><%= dept.department %></option>
+          <% } %>
+          </select>
+      </div>
+
+      <div class="grid grid-cols-4  font-semibold border-b-4 border-black flex text-center items-center mt-1">
+        <div>Item Name</div>
+        <div>Item Code</div>
+        <div>Department</div>
+        <div>Quantity</div>
+      </div>
+
+      <div class="2xl:h-[533px] xl:h-[593px] overflow-hidden overflow-y-auto ">
+        <% for(let otherDeptUnit of otherDeptUnits) {%>
+          <div class="grid grid-cols-4 py-2.5 border-b-2 last:border-0 text-sm mx-2 text-center flex items-center deployedOnOtherDept">
+            <div><%=  otherDeptUnit.item.name %></div>
+            <div><%=  otherDeptUnit.item.code %></div>
+            <div class="department"><%=  otherDeptUnit.department.department %></div>
+            <div><%=  otherDeptUnit.qty %></div>
+          </div>  
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <script src="/js/userDashboard.js"></script>
+</main> 

@@ -1,0 +1,49 @@
+<% layout('/layouts/boilerplate') %>
+
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/usernavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <div class="flex justify-between text-white">
+    <p class="font-semibold text-2xl flex flex-cols text-white">Reports</p>
+    <p class="font-semibold text-text-black">Welcome <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+  <div class="h-full  mt-1 flex justify-center gap-5">
+    <div class="w-72 h-44 bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl p-5">
+      <div>
+          <label for="dateQuery" class="text-xl font-semibold ">Date :</label>
+          <input type="date" name="dateQuery" id="dateQuery" class="w-full p-2 border-2 rounded-md mt-2" onchange="dateSearch(this.value)">
+          <div class="text-center mt-4"> 
+            <a href="/user/request/reports/printpreview" target="_blank" id="printPreview">
+              <button class="border px-3 h-10 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-blue-500 font-bold text-white hover:bg-white hover:text-blue-500 hover:shadow-[2px_2px_0px_0px_blue] hover:border-blue-500 transition-ease-in duration-300">Print Preview</button>
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="w-2/3 bg-white  shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl p-5">
+      <div class="w-full h-full border">
+        <div class="grid grid-cols-5  py-2 border-b font-semibold ">
+          <div class="flex justify-center items-center w-full h-full border-r">Tracking No.</div>
+          <div class="flex justify-center items-center w-full h-full border-r">Item Name</div>
+          <div class="flex justify-center items-center w-full h-full border-r">Item Code</div>
+          <div class="flex justify-center items-center w-full h-full border-r">Quantity</div>
+          <div class="w-full h-full border-r last:border-r-0 text-center">Receive Date (mm/dd/yyyy)</div>
+        </div>
+        <div class="2xl:h-[555px] xl:h-[615px] overflow-hidden overflow-y-auto">
+          <% for(let request of requests ) { %>
+            <div class="grid grid-cols-5 text-center py-1 even:bg-slate-50 requestReceiveData" data-receive-date="<%= request.receivedate.getMonth() + 1 + '/' + request.receivedate.getDate() + '/' + request.receivedate.getFullYear() %>">
+              <div class="font-mono"><%= request.tracking %></div>
+              <div><%= request.item.name %></div>
+              <div><%= request.item.code %></div>
+              <div><%= request.qty %></div>
+              <div><%= request.receivedate.getMonth() + 1 + '/' + request.receivedate.getDate() + '/' + request.receivedate.getFullYear() %></div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="/js/userreport.js"></script>
+</main>

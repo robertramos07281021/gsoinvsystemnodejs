@@ -1,0 +1,173 @@
+.welcomeBg {
+  background-image: url('../image/welcomeBg.jpg');
+  background-size: 100% 100%;
+}
+
+.editBg {
+  background-image: url('../image/editpage.jpg');
+  background-size: 100% 100%;
+}
+
+.loginRight{
+  background-image: url('../image/bg2.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+ 
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.bounceEffect {
+  -webkit-animation:bounce-in 1s ease-in 0s 1 normal;
+  -moz-animation:bounce-in 1s ease-in 0s 1 normal;
+  -ms-animation:bounce-in 1s ease-in 0s 1 normal;
+  animation:bounce-in 1s ease-in 0s 1 normal;
+}
+
+@-webkit-keyframes bounce-in {
+  0%{ opacity: 0; -webkit-transform: scale(.3); transform: scale(.3); }
+  50%{ opacity: 1; -webkit-transform: scale(1.0); transform: scale(1.0); }
+  70%{ -webkit-transform: scale(0.9); transform: scale(0.9); }
+  100%{ -webkit-transform: scale(1); transform: scale(1); }
+}
+  
+@keyframes bounce-in {
+  0%{ opacity: 0; transform: scale(.3); }
+  50%{ opacity: 1; transform: scale(1.0); }
+  70%{ transform: scale(0.9); }
+  100%{ transform: scale(1); }
+}
+
+
+/* =================================================================MyRequest  */
+
+/* RequestForm */
+#requestFormModal {
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+  
+/* editRequestForm */
+#editRequestForm {
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* deleteRequest */
+
+
+
+#requestFormDiv {
+  position: absolute;
+  width:100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#wishlistContent{
+  height: calc(100% - 36px);
+}
+
+#editWishlistForm {
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#addWishListForm{
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#viewWishlistModal{
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
+#receiveForm {
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+ 
+#completeReceiveDetails{
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.historyDetailsModal{
+  height: 600px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#formModal {
+  height: 650px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#completeReceivedModal {
+  height: 700px;
+  width: 500px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* --------------------------------------------------------------- for Scroll bar */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px black; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(203, 213, 225, 1); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(64,64,64,1); 
+}
+
+

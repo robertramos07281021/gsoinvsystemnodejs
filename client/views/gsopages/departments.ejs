@@ -1,0 +1,87 @@
+<% layout('/layouts/boilerplate') %>
+
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/adminnavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+  <div class="flex justify-between text-black mb-1">
+    <p class="font-semibold text-2xl flex flex-cols text-white"> Departments</p>
+    <p class="font-semibold text-white">Welcome Admin <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class=" h-full rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] bg-white flex flex-col justify-center">
+
+    <form class="flex justify-end gap-10 p-5 items-center">
+      
+      <div class="flex gap-5 ">
+        <select name="selectedDept" id="selectedDept" class="ring-2 ring-slate-300 rounded-md p-1 w-96">
+          <% for(let department of departments) { %>
+            <option value="<%= department.id %>" <% if(querySelector === department.id) {%>selected<% } %> ><%=department.department %></option>
+            <% } %>
+          </select>
+          <button class="shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 rounded bg-blue-500 font-bold text-white border-blue-300 border hover:bg-white hover:text-blue-500 hover:border-blue-500 hover:shadow-[2px_2px_0px_0px_rgba(59,130,246,1)] transition-ease-in duration-300">Submit</button> 
+        </div>
+        <a href="/departments/manage">
+          <p class="shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 rounded bg-red-500 font-bold text-white border-red-300 border hover:bg-white hover:text-red-500 hover:border-red-500 hover:shadow-[2px_2px_0px_0px_rgba(239,68,68,1)] transition-ease-in duration-300">
+            Manage Departments
+          </p>
+        </a>
+      
+    </form>
+
+    <div class="w-full h-full grid grid-cols-2 px-5 gap-5">
+
+      <div class="h-full flex flex-col pb-5">
+        <h1 class=" p-2 text-xl font-bold">
+          Deployed Item
+        </h1>
+        <div class=" w-full h-full border-2 rounded-md">
+          <div class="grid grid-cols-5 text-center border-b py-1 text-lg font-semibold">
+            <div class="col-span-2 border-r">Name</div>
+            <div class="col-span-2 border-r">Code</div>
+            <div>Qty</div>
+          </div>
+          <div class=" overflow-y-auto overflow-hidden 2xl:h-[483px] xl:h-[543px] ">
+            <% for(let deployedUnit of deployedUnits) {%>
+              <div class="grid grid-cols-5 text-center py-2 odd:bg-slate-100">
+                <div class="col-span-2"><%= deployedUnit.item.name %></div>
+                <div class="col-span-2"><%= deployedUnit.item.code %></div>
+                <div><%= deployedUnit.qty %></div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flex flex-col rounded-md h-full pb-5">
+        <h1 class="p-2 text-xl font-bold">
+          Users
+        </h1>
+        <div class=" w-full h-full border-2 rounded-md">
+          <div class="grid grid-cols-8 text-center border-b py-1 text-lg font-semibold">
+            <div class="col-span-3 border-r">Fullname</div>
+            <div class="border-r">Role</div>
+            <div class="col-span-2 border-r">Status</div>
+            <div class="col-span-2">Username</div>
+          </div>
+          <div class="overflow-y-auto overflow-hidden 2xl:h-[483px] xl:h-[543px] ">
+            <% for(let userOnDept of usersOnDept) {%>
+            <div class="grid grid-cols-8 text-center py-2 odd:bg-slate-100">
+              <div class="col-span-3"><%= userOnDept.firstname.charAt(0).toUpperCase()%><%= userOnDept.firstname.slice(1)%> <%= userOnDept.lastname.charAt(0).toUpperCase()%><%=userOnDept.lastname.slice(1) %></div>
+              <div><%=userOnDept.role %></div>
+              <div class="col-span-2"><%= userOnDept.status %></div>
+              <div class="col-span-2"><%= userOnDept.username %></div>
+            </div>
+            
+            <% } %>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

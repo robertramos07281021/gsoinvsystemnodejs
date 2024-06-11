@@ -1,0 +1,109 @@
+<% if(error && error.length) { %>
+  <div class="absolute flex items-center p-5 justify-between bg-red-500/30 w-96 h-16 rounded-lg backdrop-blur-sm b-4 right-5 bottom-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] border-2 border-red-500 z-50" id="errorEventMessage">
+    <strong><%= error %> </strong> <button class="px-3 py-1 font-bold text-sm rounded-md absolute right-[-10px] top-[-10px] bg-red-500" id="errorEventMessageClose">X</button>
+  </div>
+
+  
+  <script>
+    const errorEventMessage = document.getElementById('errorEventMessage')
+    const flashCloseBtn = document.getElementById('errorEventMessageClose');
+    flashCloseBtn.onclick = function () {
+      errorEventMessage.remove();
+    }
+  </script>
+  <% } %>
+
+  
+
+  <% if(addEvent && addEvent.length) { %>
+      <!-- ========================================================================For add event ======================================================= -->
+    <div class="absolute flex items-center p-5 justify-between bg-yellow-300/30 border-yellow-300 w-96 h-16 rounded-lg backdrop-blur-sm b-4 right-5 bottom-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] border-2  z-50" id="addSuccess">
+      <strong>
+          <%= addEvent %> 
+      </strong> 
+      <button class="px-3 py-1 font-bold text-sm rounded-md absolute right-[-10px] top-[-10px] bg-yellow-300 " id="addSuccessFlashClose">X</button>
+    </div>
+
+    <script>
+      const addSuccess = document.getElementById('addSuccess')
+      const flashCloseBtn = document.getElementById('addSuccessFlashClose');
+      flashCloseBtn.onclick = function () {
+        addSuccess.remove();
+      }
+    </script>
+  <% } %>
+
+
+ 
+  <% if(requestReceivedSuccess && requestReceivedSuccess.length) { %>
+    <!-- =====================================================================For receive event============================================================= -->
+    <div class="absolute flex items-center p-5 justify-between bg-yellow-800/30 w-96 h-16 rounded-lg backdrop-blur-sm b-4 right-5 bottom-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] border-2 border-yellow-800 z-50" id="receiveRequestMessage">
+      <strong><%= requestReceivedSuccess %> </strong> <button class="px-3 py-1 font-bold text-sm rounded-md absolute right-[-10px] top-[-10px] bg-yellow-800" id="receiveRequestMessageClose">X</button>
+    </div>
+
+    <script>
+      const receiveRequestSuccess = document.getElementById('receiveRequestMessage')
+      const flashCloseBtn = document.getElementById('receiveRequestMessageClose');
+      flashCloseBtn.onclick = function () {
+        receiveRequestSuccess.remove();
+      }
+    </script>
+  <% } %>
+
+  
+
+  <% if(deleteEvent && deleteEvent.length) { %>
+      <!-- ========================================================================For delete event=========================================================== -->
+    <div class="absolute flex items-center p-5 justify-between bg-red-300/30 w-96 h-16 rounded-lg backdrop-blur-sm b-4 right-5 bottom-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] border-2 border-red-500 z-50" id="deleteFlashMessage">
+      <strong><%= deleteEvent %> </strong> <button class="px-3 py-1 font-bold text-sm rounded-md absolute right-[-10px] top-[-10px] bg-red-500" id="deleteFlashMessageClose">X</button>
+    </div>
+
+    <script>
+      const deleteSuccess = document.getElementById('deleteFlashMessage')
+      const flashCloseBtn = document.getElementById('deleteFlashMessageClose');
+      flashCloseBtn.onclick = function () {
+        deleteSuccess.remove();
+      }
+    </script>
+  <% } %>
+
+
+
+  <% if(updateEvent && updateEvent.length) { %>
+      <!-- ===========================================================================For update event============================================================ -->
+    <div class="absolute flex items-center p-5 justify-between bg-orange-400/30 border-orange-500 w-96 h-16 rounded-lg backdrop-blur-sm b-4 right-5 bottom-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] border-2 z-50" id="updateSuccess">
+      <strong>
+          <%= updateEvent %> 
+      </strong> 
+      <button class="px-3 py-1 font-bold text-sm rounded-md absolute right-[-10px] top-[-10px] bg-orange-500 " id="updateSuccessFlashClose">X</button>
+    </div>
+
+    <script>
+      const updateSuccess = document.getElementById('updateSuccess')
+      const flashCloseBtn = document.getElementById('updateSuccessFlashClose');
+      flashCloseBtn.onclick = function () {
+        updateSuccess.remove();
+      }
+    </script>
+  <% } %>
+
+  <% if(success && success.length) { %>
+    <!-- ===========================================================================For Success event============================================================ -->
+  <div class="absolute flex items-center p-5 justify-between bg-green-300/30 border-green-500 w-96 h-16 rounded-lg backdrop-blur-sm b-4 right-5 bottom-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] border-2 z-50" id="success">
+    <strong>
+        <%= success %> 
+    </strong> 
+    <button class="px-3 py-1 font-bold text-sm rounded-md absolute right-[-10px] top-[-10px] bg-green-500 " id="successFlashClose">X</button>
+  </div>
+
+  <script>
+    const success = document.getElementById('success')
+    const flashCloseBtn = document.getElementById('successFlashClose');
+    flashCloseBtn.onclick = function () {
+      success.remove();
+    }
+  </script>
+<% } %>
+
+ 
+

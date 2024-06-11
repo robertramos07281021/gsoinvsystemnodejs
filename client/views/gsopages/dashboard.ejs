@@ -1,0 +1,130 @@
+<% layout('/layouts/boilerplate') %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/adminnavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+  <div class="flex justify-between text-black mb-1">
+    <p class="font-semibold text-2xl flex flex-cols text-white"> Dashboard</p>
+    <p class="font-semibold text-white">Welcome Admin <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class=" grid h-full grid-cols-7 grid-rows-5 gap-5">
+    <div class=" bg-blue-200 text-blue-700 rounded-lg shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-3 grid grid-col">
+      <p class="2xl:text-base xl:text-sm font-semibold">Total Active Users:</p>
+      <div class="2xl:text-3xl xl:text-2xl font-bold flex justify-between items-center 2xl:gap-3 items-end">
+          <img src="/image/icons8-users-48.png" class=" w-8 h-8 bg-blue-700 mt-2 rounded-full p-2">
+          <%= totalUser %>
+          
+        </div>
+    </div>
+    
+
+    
+    <div class=" bg-yellow-100 text-yellow-500 rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-3 grid grid-col">
+      <p class="2xl:text-lg xl:text-base font-semibold">For Approval:</p>
+      <div class="2xl:text-4xl xl:text-2xl font-bold flex justify-between items-center  2xl:gap-3 items-end">
+        <img src="/image/icons8-approvals-48.png" class=" w-8 h-8 bg-yellow-500 text-yellow-500 mt-2 rounded-full p-2">
+        <p><%= countRequest %></p>
+      </div>
+    </div>
+    
+    <div class=" bg-green-200 text-green-700 rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-3 grid grid-col">
+      <p class="2xl:text-lg xl:text-base font-semibold">Total Units:</p>
+      <div class="2xl:text-4xl xl:text-2xl font-bold flex justify-between items-center  2xl:gap-3 items-end">
+        <img src="/image/icons8-item-50.png" class=" w-8 h-8 bg-green-700 mt-2 rounded-full p-2">
+        <p><%= totalUnit%></p>
+      </div>
+    </div>
+
+    <div class="row-span-4 col-span-4 row-start-2 bg-white rounded-xl p-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] relative">
+      <% if(users.length > 10) {%>
+      <div class="absolute left-0 bottom-5 flex w-full justify-center">
+        <ul class="flex justify-center items-center">
+          <% if(userPage > 1) {%>
+          <button class="py-1 px-3 border mr-2 cursor-pointer" onclick="prevPage()">&#171;</button>
+          <% } %>
+          <% for(let i = 1; i <= Math.ceil(users.length/10); i++) { %>
+            <% if(i <= 5) {%>
+              <li id="pagination">
+                <form action="">
+                  <input type="hidden" name="usersPage" id="usersPage" value="<%=i%>">
+                  <button class="py-1 px-3 border<% if(userPage == i || (i === 1 && !Boolean(userPage))) {%> border-blue-500 bg-blue-500 text-white<% } %>"><%= i %></button>
+                </form>
+              </li>
+            <% } %>
+          <% } %>
+          <% if(userPage != Math.ceil(users.length/10)) {%>
+          <button class="py-1 px-3 border ml-2 cursor-pointer" onclick="nextPage()">&#187;</button>
+          <% } %>
+        </ul>
+      </div>
+      <% } %>
+
+      <div class="grid grid-cols-8 text-center font-bold 2xl:text-base xl:text-xs border-b-4 border-black">
+        <div class=" col-span-2 pb-1 ">Fullname</div>
+        <div class="col-span-2">Phone no.</div>
+        <div class="col-span-2">Department</div>
+        <div>Role</div>
+        <div>Status</div>
+
+      </div>
+      <div class="2xl:h-[453px] xl:h-[508px] overflow-hidden overflow-y-auto">
+        <% for(let user of pagginateUser.data) { %> 
+          <div class="grid grid-cols-8 text-center py-2 2xl:text-base xl:text-xs odd:bg-slate-100">
+            <div class="col-span-2">
+              <%= user.firstname.charAt(0).toUpperCase()%><%= user.firstname.slice(1)%> <%= user.lastname.charAt(0).toUpperCase()%><%=user.lastname.slice(1) %>
+            </div>
+          
+            <div class="col-span-2">
+              0<%= user.phone %>
+            </div>
+            <div class="col-span-2">
+              <%= user.department %>
+            </div>
+            <div class="">
+              <%= user.role %>
+            </div>
+            <div class="">
+              <%= user.status %>
+            </div>
+    
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="cols-start-5 col-span-3 row-span-5 bg-white rounded-xl p-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)]">
+      <div class=" h-full flex flex-col">
+
+
+        <div class="grid grid-cols-7 text-center border-b-4 border-black font-bold 2xl:text-base xl:text-xs">
+          <div class="col-span-2 flex items-center justify-center">Item Name</div>
+          <div class="col-span-2 flex items-center justify-center">Item Code</div>
+          <div class="flex col-span-3 justify-center ">
+            <div class="  flex justify-center w-full items-center ">Unit Qty</div>
+            <div class=" px-2 flex justify-center w-full leading-none pb-2">Deployed Qty</div>
+          </div>
+        </div >
+        <div class="2xl:h-[578px] xl:h-[648px] overflow-hidden overflow-y-auto">
+          <% for(let newArrayUnit of newArrayUnits)  {%>
+            <div class="grid grid-cols-7 text-center py-2 odd:bg-slate-100 2xl:text-base xl:text-xs">
+              <div class="col-span-2"><%= newArrayUnit.itemName %></div>
+              <div class="col-span-2 "><%= newArrayUnit.itemCode%></div>
+              <div class="flex gap-3 col-span-3 justify-center">
+                <div class=" px-1 flex justify-center  w-full"><%= newArrayUnit.unit()%></div>
+                <div class="px-1 flex justify-center  w-full"><%= newArrayUnit.deployed() %></div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/arrowPagination.js"></script>
+</main>
+
+
+
+

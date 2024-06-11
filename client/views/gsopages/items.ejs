@@ -1,0 +1,101 @@
+<% layout('/layouts/boilerplate'); %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/adminnavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+
+  <div class="flex justify-between text-black">
+    <p class="font-semibold text-2xl flex flex-cols text-white">Items</p>
+    <p class="font-semibold text-white">Welcome Admin <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class="h-full mt-1 flex flex-col bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl p-5 gap-3">
+    <div class="">
+
+      <a href="/items/manage" ><button class="border w-44  py-1 font-bold rounded shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(239,68,68,1)] text-white bg-red-500 hover:bg-white hover:text-red-500 transition-ease-in duration-300 hover:border-red-500">Manage Item</button></a>
+    </div>
+
+    <div class="grid-cols-2 grid w-full h-full gap-5">
+
+      <div class=" flex flex-col ">
+        <h1 class="p-2 text-xl font-bold">
+          Available Units
+        </h1>
+        <div class="w-full 2xl:h-[533px] xl:h-[592px] border-2 rounded-md flex flex-col">
+          <div class="grid grid-cols-5 text-center  border-b py-1 text-lg  border-b-2 font-semibold">  
+            <div class="col-span-2 border-r">Name</div>
+            <div class="border-r">Code</div>
+            <div class="border-r">Quantity</div>
+            <div>Description</div>
+          </div>
+          <div class=" overflow-y-auto ">
+            <% for(let unit of units)  { %>
+              <div class="grid grid-cols-5 text-center py-2 odd:bg-slate-100">
+                  <div class="col-span-2"><%= unit.item.name %></div>
+                  <div><%= unit.item.code %></div>
+                  <div><%= unit.qty %></div>
+                  <div class="">
+                    <button class="peer duration-300 transition-ease-in bg-green-500 w-20 text-white rounded  rounded shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] border border-green-300 hover:text-green-500 hover:bg-white hover:shadow-[2px_2px_0px_0px_rgba(34,197,94,1)] font-bold">Click</button>
+                    <div class="hidden peer-focus:flex absolute top-0 left-0 w-screen h-screen justify-center items-center ">
+                  
+                      <div class="w-80 px-4 py-6 bg-white rounded-md flex items-center justify-center border-t-[30px] border-green-500 border-x-4 border-b-4 flex-col gap-5">
+                        <div>
+                          <div class="text-2xl w-full font-bold"><%=unit.item.name %></div>
+                          <div class="font-semibold text-sm text-center">(Description)</div>
+                        </div>
+                        <div class="text-justify px-4 indent-5">
+                          <%=unit.item.description %>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            <% } %>
+          </div>
+          
+        </div>
+      </div>
+    
+      <div class="flex flex-col ">
+        <div class="flex flex-cols justify-between">
+          <h1 class="p-2 text-xl font-bold">
+            Deployed Units
+          </h1>
+          <div >
+            <select name="selectedDept" id="selectedDept" class="ring-2 ring-slate-300 rounded-md p-1 mr-2 w-52">
+              <option value="">Select Department</option>
+              <% for(let deptWithDeploy of deptsWithDeploy) {%>
+                <option value="<%= deptWithDeploy.department %>"><%= deptWithDeploy.department %></option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+        
+        <div class="w-full 2xl:h-[533px] xl:h-[592px] border-2 rounded-md flex flex-col">
+          <div class="grid grid-cols-6 text-center  border-b py-1 text-lg  border-b-2 font-semibold">  
+            <div class="col-span-2 border-r">Name</div>
+            <div class="col-span-2 border-r">Department</div>
+            <div class="col-span-2 ">Quantity</div>
+
+          </div>
+          <div class=" overflow-y-auto h-full">
+            <% for(let deploy of deployed)  { %>
+              <div class="grid grid-cols-6 text-center py-2 odd:bg-slate-100 deployedUnitData">
+                <div class="col-span-2"><%= deploy.item.name %></div>
+                <div class="col-span-2 departmentData"><%= deploy.department.department %></div>
+                <div class="col-span-2"><%= deploy.qty %></div>
+              </div>
+            <% } %>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/items.js"></script>
+</main
+>

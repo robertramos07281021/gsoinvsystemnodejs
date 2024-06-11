@@ -1,0 +1,253 @@
+<% layout('/layouts/boilerplate') %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/usernavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+  <div class="flex justify-between text-white">
+    <p class="font-semibold text-2xl flex flex-cols text-white">My Request</p>
+    <p class="font-semibold text-text-black">Welcome <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class=" h-full mt-1 grid grid-cols-7 gap-5 grid-rows-4 " >
+
+    <div class="bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] h-full rounded-xl px-4 pt-4 pb-3 col-span-3 row-span-4 flex flex-col">
+
+      <form action="">
+        <select id="contentPicker" class="w-full h-12 border-2 py-2 px-2 mb-3 text-lg font-bold rounded-md">
+        <option value="yourDepartmentUnits" >Your Department Units</option>
+          <%if (request.length > 0) { %>
+            <option value="yourRequests">Your Requests</option>
+          <% } %>
+        </select>
+      </form>
+
+        <!---------------------------------============================================ My Request =================================------------------------------->
+      <% if(request.length > 0) { %>
+        <div class="hidden" id="yourRequestDiv">
+          <div class="grid grid-cols-8 text-center font-semibold border-b-4 border-black flex items-center">
+            <div class="col-span-2 ">Tracking No</div>
+            <div class="col-span-2 ">Item Name</div>
+            <div>Quantity</div>
+            <div class="col-span-3">Action</div>
+          </div>
+        
+          <div class="xl:h-[610px] 2xl:h-[545px] overflow-y-auto overflow-hidden ">
+            <% for(let myRequest of request) { %>
+              <div class="grid grid-cols-8 py-1 border-b-2 last:border-0 text-sm mx-2 text-center requestData" data-myrequest-id="<%= myRequest.id %>">
+                <div class="col-span-2 font-mono"><%= myRequest.tracking %></div>
+                <div class="col-span-2"><%= myRequest.item.name %></div>
+                <div><%= myRequest.qty %></div>
+                <div class="col-span-3 flex gap-2 justify-center items-center">
+                  <span class="editMyRequestBtn border text-white px-5 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-ease-in duration-300 font-semibold   hover:text-orange-500  hover:bg-white bg-orange-500 border-yellow-500 hover:shadow-[2px_2px_0px_0px_orange] cursor-pointer" >
+                    Edit
+                  </span>
+                  <div class="deleteThisRequestBtn border text-white px-3 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-ease-in duration-300 font-semibold  hover:text-red-500 border-red-300 hover:bg-white hover:border-red-500 bg-red-500 hover:shadow-[2px_2px_0px_0px_rgba(239,68,68,1)] cursor-pointer">
+                    Delete
+                  </div>
+                </div>
+              </div>
+            <%} %>
+          </div>
+        
+        </div>
+      <% } %>
+          <!-------------------================================Your Department Div ========================================================-------------------->
+      <div id="yourDepartmentUnitsDiv" class="h-full flex flex-col">
+        <div class="grid grid-cols-5 text-center font-semibold border-b-4 border-black flex items-center">
+          <div class="col-span-2">Item Name</div>
+          <div>Item Code</div>
+          <div>Quantity</div>
+          <div>Action</div>
+        </div>
+        <div class=" xl:h-[610px] 2xl:h-[545px] overflow-y-auto overflow-hidden">
+          <% for(let deptDeploy of deploy) { %>
+            <div class="grid grid-cols-5 py-2  even:bg-slate-100 text-sm mx-2 text-center">
+              <div class="deployedItemName col-span-2" data-dept-deploys="<%= deptDeploy.id %>"><%= deptDeploy.item.name %></div>
+              <div class="deployedItemCode"><%= deptDeploy.item.code %></div>
+              <div class="deployedItemQty"><%= deptDeploy.qty %></div>
+              <div>
+                <span id="" class="border requestBtn px-3 bg-yellow-300 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-ease-in duration-300 font-semibold hover:text-yellow-300 border-yellow-200 hover:bg-black cursor-pointer">
+                  Request
+                </span>
+              </div>
+            </div>  
+            <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl px-4 pt-4 pb-3 col-span-3 row-span-2 grid" id="forReceiving">
+      <!-- for Receive -->
+      <div class="flex flex-col">
+        <div class="flex justify-between mb-1">
+          <h1 class="text-lg font-bold">Approved <span class="text-sm">(Ready To Claim)</span></h1>
+          <input type="text" placeholder="Tracking No." class="border-2 pl-2 py-1 border-black/20 rounded-md" onchange="searchForReceive(this.value)">
+        </div>
+        <div class="grid grid-cols-5 text-center font-semibold border-b-4 border-black flex items-center">
+          <div>Tracking No</div>
+          <div class="col-span-2">Item Name</div>
+          <div>Quantity</div>
+          <div>Action</div>
+        </div>
+
+        <div class=" 2xl:h-56 xl:h-[230px] overflow-hidden overflow-y-auto">
+          <% for(let approvedRequest of approvedRequests) { %>
+            <div class="grid grid-cols-5 py-2 text-sm even:bg-slate-100 text-center receivingData" data-request-id="<%= approvedRequest.id %>">
+              <div class="font-mono approvedRequestTracking"><%= approvedRequest.tracking %></div>
+              <div class="col-span-2"><%= approvedRequest.item.name %></div>
+              <div><%= approvedRequest.qty %></div>
+              <div>
+                <span class="receiveBtn border text-white px-3 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-ease-in duration-300 font-semibold    hover:text-yellow-800 border-white hover:bg-white bg-yellow-800 border-yellow-500 hover:shadow-[2px_2px_0px_0px_brown] cursor-pointer" >
+                  Receive
+                </span>
+              </div>
+            </div>
+          <% } %>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl p-3 col-start-7 row-start-1 flex justify-between flex-col items-center ring-4 ring-inset ring-yellow-800 ring-offset-4">
+      <h1 class="2xl:text-lg xl:text-sm font-semibold">Total Approved</h1>
+      <h1 class="text-7xl font-semibold"><%= approvedCount%></h1>
+      <h2 class="text-sm font-semibold">For Receiving</h2>
+    </div>
+
+    <div class="bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl p-3 col-start-4 row-start-3 flex justify-between flex-col items-center ring-4 ring-inset ring-orange-500 ring-offset-4">
+      <h1 class="2xl:text-lg xl:text-sm font-semibold">Total Request</h1>
+      <h1 class="text-7xl font-semibold"><%=requestCount%></h1>
+      <h2 class="text-sm font-semibold">For Approval</h2>
+    </div>
+    
+    <div class="bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl p-3 col-start-4 row-start-4 flex justify-between flex-col items-center ring-4 ring-inset ring-green-500 ring-offset-4">
+      <h1 class="2xl:text-lg xl:text-sm font-semibold">Total Receive</h1>
+      <h1 class="text-7xl font-semibold"><%=receivedCount%></h1>
+      <h2 class="2xl:text-sm xl:text-xs text-center">Complete Transaction</h2>
+    </div>
+   
+
+  <!-- Complete Receive -->
+    <div class="bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-xl px-4 pt-4 pb-3 col-span-3 row-span-2 col-start-5 h-full flex flex-col">
+      <div class="flex justify-between mb-1">
+        <h1 class="text-lg font-bold">Complete Receive</h1>
+        <input type="text" placeholder="Tracking No." class="border-2 pl-2 py-1 border-black/20 rounded-md" onchange="searchCompleteReceive(this.value)">
+      </div>
+
+      <div class="grid grid-cols-5 text-center font-semibold border-b-4 border-black flex items-center">
+        <div>Tracking No</div>
+        <div class="col-span-2">Item Name</div>
+        <div>Quantity</div>
+        <div>Action</div>
+      </div>
+      <div class="2xl:h-56 xl:h-[230px]  overflow-hidden overflow-y-auto">
+        <% for(let receivedRequest of receivedRequests) { %>
+        <div class="grid grid-cols-5 py-2 text-sm even:bg-slate-100 text-center completeReceiveData" data-complete-receive="<%=receivedRequest.id %>">
+          <div class="font-mono completeReceivedTracking"><%= receivedRequest.tracking %></div>
+          <div class="col-span-2"><%= receivedRequest.item.name %></div>
+          <div><%= receivedRequest.qty %></div>
+          <div><button class="completeReceiveBtn w-20 border peer bg-green-500 rounded-md shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-ease-in duration-300 font-semibold hover:text-green-600 hover:shadow-[2px_2px_0px_0px_green] hover:border-green-300 text-white">Details</button></div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-----------------------------------------------------------------         Complete Details Form --------------------------------------------->
+  <div class='absolute w-screen h-screen bg-black/40 top-0 left-0 z-50 flex justify-center items-center backdrop-blur-sm hidden' id="completeReceivedDetailsBg">
+    <div id="completeReceiveDetails" class="bounceEffect">
+      <fieldset class="border-4  h-full border-green-500 rounded-md px-3 py-2 flex flex-col">
+        <legend class="text-3xl ml-5 font-bold px-1">Received Details</legend>
+        <div>
+            <div class="font-bold text-lg mt-1">Tracking No:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="receivedTrackingNo"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Item Name:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="receivedItemName"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Item Code:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="receivedItemCode"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Total Receive:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="receivedQty"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1 ">Description:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm text-justify indent-12 h-28" id="receivedDesc"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Stamp No:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="receivedStampNo"></div>
+        </div>
+        <div class=" h-full flex justify-center items-center">
+          <button id="closeCompleteReceived" class="border h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-black text-white font-bold hover:bg-white hover:border-black hover:text-black transition-ease-in duration-300">Close</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!--------------=========================================================== Edit Request Form =====================================------------------>
+  <div class='absolute w-screen h-screen bg-black/40 top-0 left-0 z-50 flex justify-center items-center backdrop-blur-sm hidden' id="editRequestFormDiv">
+    <form id="editRequestForm" method="POST" novalidate class="relative bounceEffect">
+      <fieldset class="border-4  h-full border-orange-500 rounded-md px-3 py-2 flex flex-col">
+        <legend class="text-3xl ml-5 font-bold px-1">Edit Request</legend>
+        <div>
+          <div class="font-bold text-lg mt-1">Tracking No:</div>
+          <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="requestTrackingNo"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Item Name:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="requestItemName"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Item Code:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm" id="requestItemCode"></div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1">Status:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm animate-pulse">Pending</div>
+        </div>
+        <div>
+            <div class="font-bold text-lg mt-1 ">Description:</div>
+            <div class="w-full border-2 px-2 py-1 rounded-md text-sm text-justify indent-12 h-28" id="requestDesc"></div>
+        </div>
+        <div>
+            <label class="font-bold text-lg mt-1 " for="requestQty">Quantity: <span id="editRequestQtyErrorMessage" class="text-red-500 font-semibold text-sm"></span></label>
+            <input type="number" name="requestQty" id="requestQty" class="w-full border-2 px-2 py-1 rounded-md text-sm" required>
+        </div>
+        <div class=" h-full flex justify-center items-center gap-10">
+          <button id="editMyRequestButton" class="border h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-orange-500 text-white font-bold hover:bg-white hover:border-orange-300 hover:text-orange-500 hover:shadow-[2px_2px_0px_0px_orange] transition-ease-in duration-300 w-20">Edit</button>
+          <button id="closeMyRequestButton" class="border h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-black text-white font-bold hover:bg-white hover:border-black hover:text-black transition-ease-in duration-300 w-20">Close</button>
+        </div>
+        <div id="editRequestConfirm" class="absolute h-full w-full flex justify-center items-center flex-col left-0 top-0 hidden">
+          <div class="w-96 h-80 bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-md border-4 border-black border-t-[30px] ring-4 ring-inset ring-orange-500 ring-offset-2 flex flex-col justify-center items-center text-center gap-10 px-5">
+            <div id="editRequestConfirmMessage" class="font-semibold"></div>
+            <div class="flex gap-10">
+              <button id="editRequestConfirmYes" class="border h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-orange-500 text-white font-bold border-orange-300 hover:bg-white hover:text-orange-500 hover:shadow-[2px_2px_0px_0px_orange] transition-ease-in duration-300">Yes</button>
+              <button id="editRequestConfirmNo" class="border h-10 w-24 cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-black text-white font-bold hover:bg-white hover:text-black-500 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:text-black transition-ease-in duration-300">No</button>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <!------------------------================================================== Delete Request=============================--------------------->
+  <div class="absolute w-screen h-screen top-0 left-0 z-50 flex justify-center items-center hidden " id="deleteRequestBg">
+    <form action="" id="deleteRequestForm" class="w-96 h-80 bg-white shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] rounded-md border-4 border-black border-t-[30px] ring-4 ring-inset ring-red-500 ring-offset-2 grid  place-content-center gap-10 text-center px-5 bounceEffect" method="POST">
+        <div>
+          <p class="font-semibold" id="deleteMessage"></p>
+        </div>
+        <div class="flex justify-center item-center gap-10">
+          <button class="border h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-red-500 text-white font-bold border-red-300 hover:bg-white hover:text-red-500 hover:shadow-[2px_2px_0px_0px_rgba(239,68,68,1)] transition-ease-in duration-300" id="deleteRequestBtn">Delete</button>
+          <p class="border h-10 w-24 cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md bg-black text-white font-bold hover:bg-white hover:text-black-500 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:text-black transition-ease-in duration-300 flex justify-center items-center" id="cancelDeleteRequestBtn">Cancel</p>
+        </div>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="/js/myrequest.js"></script>
+</main>

@@ -1,0 +1,98 @@
+<% layout('/layouts/boilerplate') %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/usernavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+
+  <div class="flex justify-between text-white mb-1">
+    <p class="font-semibold text-2xl flex flex-cols text-white" id="pageTitle"> <a href="/admin/myprofile/view/<%=user.id %>">My Profile</a>/<span class="text-gray-300">Update</span> </p>
+    <p class="font-semibold text-text-black">Welcome <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+
+  <div class=" h-full flex justify-center gap-5" id="contentDiv">
+
+    <form action="/user/myprofile/update/<%= user.id %>?_method=PUT" method="POST" class="xl:w-full 2xl:w-2/4 border bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)]  gap-5 px-10 flex flex-col items-center justify-center" id="updateUserInfoForm" novalidate>
+      <h1 class="2xl:text-4xl xl:text-3xl font-bold flex justify-center items-center mb-5 "><%= user.username %> Information</h1>
+      <div class="flex gap-5">
+        <div class="w-full">
+          <label class="text-2xl font-semibold updateInfoLabel" for="firstname">Firstname :</label>
+          <input type="text" name="firstname" id="firstname" class="ring-2 ring-slate-500 rounded-lg py-1.5 px-2 w-full mt-1 updateInfoInput" value="<%= user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1) %>" required>
+      
+        </div>
+        <div class="w-full">
+          <label class="text-2xl font-semibold updateInfoLabel" for="lastname">Lastname :</label>
+          <input type="text" name="lastname" id="lastname" class="ring-2 ring-slate-500 rounded-lg py-1.5 px-2 w-full mt-1 updateInfoInput" value="<%= user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1) %>" required>
+        </div>
+      </div>
+
+      <div class="w-full">
+        <label class="text-2xl font-semibold updateInfoLabel" for="phone">Contact :</label>
+        <input type="tel" name="phone" id="phone" class="ring-2 ring-slate-500 rounded-lg py-1.5 px-2 w-full mt-1 updateInfoInput" value="0<%= user.phone %>" pattern="[0][9][0-9]{9}" required>
+      </div>
+
+      <div class="w-full">
+        <label class="text-2xl font-semibold updateInfoLabel" for="email">Email :</label>
+        <input type="email" name="email" id="email" class="ring-2 ring-slate-500 rounded-lg py-1.5 px-2 w-full mt-1 updateInfoInput" value="<%= user.email %>" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
+      </div>
+
+      <div class="w-full">
+        <label class="text-2xl font-semibold updateInfoLabel" for="addrress">Address :</label>
+        <input type="text" name="address" id="address" class="ring-2 ring-slate-500 rounded-lg py-1.5 px-2 w-full mt-1 updateInfoInput" value="<%= user.address %>" required>
+        
+      </div>
+      <div class="w-full">
+          <label class="text-2xl font-semibold" for="department">Department :</label>
+          <select name="department" id="department" class="ring-2 ring-slate-500 rounded-lg py-1.5 px-2 w-full mt-1 updateInfoInput" required>
+            <% for(let dept of depts) {%>
+              <option value="<%=dept.department %>" <% if(user.department == dept.department) { %> selected <% } %>><%= dept.department %> </option>  
+            <% } %>
+          </select>
+      </div>
+
+      <div class="flex justify-center gap-5 xl:mt-5 w-full">
+          <button id="editUserButton" class="border-2 h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md border-orange-300 bg-orange-500 text-white font-bold hover:bg-white hover:border-orange-500 hover:text-orange-500 hover:shadow-[2px_2px_0px_0px_rgba(249,115,22,1)]   transition-ease-in duration-300" formaction="/user/myprofile/update/<%= user.id %>?_method=PUT">Edit</button>
+          <a href="/user/myprofile/view/<%=user.id %>" class="border-2 h-10 w-24 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md border-white bg-black text-white font-bold hover:bg-white hover:border-black hover:text-black transition-ease-in duration-300 flex justify-center items-center" >Cancel</a>
+      </div>
+    </form>  
+      
+    <form action="/user/changepass/<%= user._id %>" method="POST" class="h-[480px] bg-white border 2xl:w-4/12 xl:w-7/12 p-10 rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] flex flex-col justify-center items-center gap-2" id="changePasswordForm" novalidate>
+      <h1 class="text-3xl font-bold">Change Password</h1>
+      <div class="w-full">
+        <p class="text-2xl font-semibold">
+          Username :
+        </p>
+        <div class="border-2 border-slate-500 px-2 py-1.5 rounded-lg" id="usernameDiv"><%= user.username %></div>
+      </div>
+      <div class="relative w-full">
+        <label class="text-2xl font-semibold changePasswordLabels" for="oldPass">
+          Old Password :
+        </label>
+        <input type="password" name="oldPass" id="oldPass" class="ring-2 ring-slate-500 px-2 py-1.5 rounded-md w-full checkpassValidity" required>
+        <span class="password-toggle-iconOld"><i class="fas fa-eye absolute right-0  p-2.5"></i></span>
+      </div>
+      <div class="relative w-full">
+        <label class="text-2xl font-semibold changePasswordLabels" for="newPass">
+          New Password :
+        </label>
+        <input type="password" name="newPass" id="newPass" class="ring-2 ring-slate-500 px-2 py-1.5 rounded-md w-full checkpassValidity" required>
+        <span class="password-toggle-iconNew"><i class="fas fa-eye absolute right-0  p-2.5"></i></span>
+      </div>
+      <div class="relative w-full">
+        <label class="text-2xl font-semibold changePasswordLabels" for="confirmNewPass">
+          Confirm New Password :
+        </label>
+        <input type="password" name="confirmNewPass" id="confirmNewPass" class="ring-2 ring-slate-500 px-2 py-1.5 rounded-md w-full checkpassValidity" required>
+        <span class="password-toggle-iconConfirm"><i class="fas fa-eye absolute right-0  p-2.5"></i></span>
+      </div>
+
+      <div class="mt-5">
+        <button formaction="/user/changepass/<%= user._id %>" class="h-10 px-4 border-2 bg-orange-500 border-orange-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-md  font-semibold text-white hover:bg-white hover:text-orange-500 hover:border-orange-300 hover:shadow-[2px_2px_0px_0px_orange] transition-ease-in   duration-300 text-lg">Change Password</button>
+      </div>
+    </form>
+  </div>
+
+
+<script src="/js/updateUserMyProfile.js"></script>
+</main>

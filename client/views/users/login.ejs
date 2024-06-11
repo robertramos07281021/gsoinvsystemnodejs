@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+   
+    <title>GSOInvSystem Login</title>
+</head>
+
+<body class="h-screen bg-red-500/90">
+  
+    <div class="w-full p-12 h-full ">    
+      <div class="w-full grid grid-cols-3 loginRight h-full rounded-[20px] drop-shadow-[0_0px_10px_rgba(0,0,0,0.5)]">
+        <div class="w-full h-full p-9 ">
+          <div class="border w-full h-full bg-white flex justify-center items-center rounded-lg">
+            <div class=" w-64 ">
+              <div class="text-center flex justify-center">
+                  <img src="/image/icons8-human-64.png" height="10px" width="50px">
+                  <h2 class="text-2xl pl-1 flex items-end ">Log in</h2>
+              </div>
+            
+              <form method="POST" action="" class="w-full flex flex-col" id="loginForm" novalidate>
+                <div class="mt-11 h-3 w-full flex justify-center text-sm font-semibold text-red-500">
+                  <% if(error && error.length && error != 'Missing credentials' ) {%><p><%=error %></p><% }%>
+                  <% if(error == 'Missing credentials') { %>
+                    <p>Password or username is missing</p>  
+                  <% } %>
+                </div> 
+                <div class=" mb-4 mt-10 relative w-full flex flex-col">
+                
+                  <input type="text" name="username"  class="w-full relative z-10 border-0 border-b-2 border-black bg-transparent text-black outline-none px-2 peer focus:border-2 transform duration-100 focus:rounded-md focus:border-black loginValidate" placeholder=" " required >
+                  <label class="peer-focus:font-medium absolute text-lg duration-500 transform -translate-y-8 scale-75 -top-[-10px] left-1 origin-[0] peer-focus:left-0 peer-focus:text-black text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:text-gray-400 peer-focus:scale-75 peer-focus:-translate-y-8 peer-placeholder-shown:text-lg">Username</label>
+                  <p class="h-3 requiredMessage text-sm text-red-500 font-semibold hidden">Username is required</p>
+                </div>
+                <div class=" mb-4 mt-6 relative w-full flex flex-col">     
+                  <input type="password" name="password" placeholder=" " class="w-full relative z-10 border-0 border-b-2 border-black  bg-transparent text-black outline-none px-2 peer focus:border-2 transform duration-100 focus:rounded-md focus:border-black loginValidate" required>
+
+                  <label class="peer-focus:font-medium absolute text-lg duration-500 transform -translate-y-8 scale-75 -top-[-10px] left-1 origin-[0] peer-focus:left-0 peer-focus:text-black text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:text-gray-400 peer-focus:scale-75 peer-focus:-translate-y-8 peer-placeholder-shown:text-lg">Password</label>
+                  <p class="h-3 requiredMessage text-sm text-red-500 font-semibold hidden">Password is required</p>
+                </div>
+                <div class="mt-5">
+                  <button type="submit" class="font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-white hover:shadow-red-500 text-black border bg-red-500 border-red-500 px-4 py-1 rounded-lg w-full flex justify-center items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white duration-300 hover:text-red-500" id="btnLog">
+                      <img src="/image/icons8-login-64.png" class="w-6 h-6 ">
+                      Login
+                  </button>
+                </div>
+              </form>
+            </div>   
+          </div>
+        </div>
+      </div>
+    </div>   
+    <script src="/js/validateLogin.js"></script>
+</body>
+</html>

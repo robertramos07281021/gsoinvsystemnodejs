@@ -1,0 +1,23 @@
+<a href="/user/dashboard" class="2xl:text-2xl xl:text-base font-bold flex justify-center 2xl:mt-0 xl:mt-2 "><span class="px-4"><span class="text-[red] ">GSO</span>InvSystem</span></a>
+
+<ul class="mt-10 grid content-between pb-2  h-[90%] ">
+  <div class="flex flex-col gap-5">
+    <a href="/user/dashboard" >
+      <li class="flex nav-item rounded-md font-bold p-3 hover:bg-red-300/20 flex transition ease-out duration-300"><img src="/image/dashboard.png" alt="asds"   class="rounded w-6 h-6 mr-1 ">Dashboard</li>
+    </a>
+    <a href="/user/myrequest">
+      <li class="rounded-md font-bold p-3 hover:bg-red-300/20 flex transition ease-out duration-300"><img src="/image/users.png" alt="" class="rounded w-6 h-6 mr-1   bg-white p-1" >My Request</li>
+    </a>
+    <a href="/user/receive/reports">
+      <li class="rounded-md font-bold p-3 hover:bg-red-300/20 flex transition ease-out duration-300"><img src="/image/report.png" alt="" class="rounded w-6 h-6 mr-1  bg-white p-1" >Reports</li>
+    </a>
+    <a href="/user/myprofile/view/<%= currentUser._id %>">
+      <li class="rounded-md font-bold p-3 hover:bg-red-300/20 flex transition ease-out duration-300"><img src="/image/user.png" alt="" class="rounded w-6 h-6 mr-1  bg-white p-1" >My Profile</li>
+    </a>
+  </div>
+  <div>
+    <a href="/logout" class=" mt-12 flex justify-end hover:bg-red-300/20 font-bold rounded-md p-2 transition ease-out duration-300">
+      <li class="flex"><img src="/image/icons8-logout-64.png" alt="" class="rounded w-6 h-6 mr-1 bg-white p-1"> Log Out</li>
+    </a>
+  </div>
+</ul>

@@ -1,0 +1,133 @@
+<% layout('/layouts/boilerplate') %>
+<nav class=" shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] col-span-2 2xl:text-base xl:text-sm 2xl:p-6 xl:p-3 bg-white rounded-lg ">
+  <%- include('../partials/adminnavbar'); %>
+</nav>
+
+<main class="col-span-10 flex flex-col">
+  <%- include('../partials/flash') %>
+
+  <div class="flex justify-between text-black">
+    <p class="font-semibold text-2xl flex flex-cols text-white"> <a href="/departments">Departments</a> / <span class="text-gray-300 cursor-default">Manage</span></p>
+    <p class="font-semibold text-white">Welcome Admin <%= currentUser.firstname.charAt(0).toUpperCase()%><%= currentUser.firstname.slice(1)%></p>
+  </div>
+  <div class=" h-full grid grid-cols-2 grid-rows-5 gap-5 mt-1">
+
+    <div class="bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-3">
+      <h1 class="font-bold text-xl">Add Department</h1>
+      <form class="w-full relative" id="addDeptForm" novalidate>
+        <label for="department" class="font-semibold after:ms-2 after:text-red-500 after:font-bold" id="nameDeptLabel">Name of Department</label>
+
+        <div class="w-full flex gap-5 mt-1">
+          <input type="text" name="department" id="department" class="ring-2 ring-slate-300 rounded-md w-10/12 p-1" required>
+          <button class="w-2/12 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 rounded bg-blue-500 font-bold text-white border-blue-300 border hover:bg-white hover:text-blue-500 hover:border-blue-500 hover:shadow-[2px_2px_0px_0px_rgba(59,130,246,1)] transition-ease-in duration-300" id="addDepartment">Add</button>        
+        </div>
+      </form>
+    </div>
+
+    <div class="row-start-2 row-span-4 bg-white p-6 rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] flex justify-center items-center ">
+      <div class="  w-full 2xl:h-[480px] xl:h-[500px] overflow-y-auto pe-1">
+          <% for(let dept of depts) {%>
+            <div class="flex justify-between  p-2 odd:bg-slate-100 deptData" data-dept-id="<%= dept.id %>">
+              <span class="font-semibold " id="departmentSpan"><%= dept.department %></span> 
+              <span class="flex flex-row gap-5 me-3">
+                <button class="editDeptButton w-20 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded border bg-orange-500 border font-bold text-white border-orange-300 hover:bg-white hover:text-orange-500 hover:shadow-[2px_2px_0px_0px_rgba(249,115,22,1)]  transition-ease-in duration-300">Edit</button>
+                <button class="deleteDeptButton w-20 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] border rounded bg-red-500 font-bold text-white border-red-300 hover:bg-white hover:text-red-500 hover:shadow-[2px_2px_0px_0px_rgba(239,68,68,1)]  transition-ease-in duration-300">Delete</button>
+              </span>
+            </div>
+          <% } %>
+        </div>
+    </div>
+
+    <div class="col-start-2 row-span-2 bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)]"> 
+      <form class="w-full h-full p-2 flex flex-col justify-between " id="mergeForm" novalidate>
+        <div class="2xl:h-[180px] xl:h-[210px] overflow-y-auto pt-1">
+          <div class=" xl:pt-2 2xl:pt-0 gap-2  flex flex-wrap justify-normal  xl:ps-5 2xl:ps-3  ">
+            <% for(let dept of depts) { %>
+              <label class="border rounded px-2 2xl:h-9 2xl:w-36 xl:w-36 xl:h-12 flex items-center mergeDeptLabelBg overflow-hidden" for="<%=dept.department %>">
+                <input type="checkbox" name="department" id="<%=dept.department %>" value ="<%=dept.department%>" class="mr-2 ">
+                <label for="<%=dept.department %>">
+                  <span class="2xl:text-base xl:text-xs font-semibold">
+                    <%=dept.department %>
+                  </span>
+                </label>
+              </label>
+            <% } %>
+          </div>
+        </div>
+        <div class="relative h-4">
+          <p class=" text-xs text-red-500 font-semibold hidden " id="pleaseSelectTwo">Please select 2 or more department to merge </p>
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"  class="absolute right-0 xl:-top-1 2xl:top-0 stroke-2 fill-red-500 peer"><path d="M479.79-288q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM444-432h72v-240h-72v240Zm36.28 336Q401-96 331-126t-122.5-82.5Q156-261 126-330.96t-30-149.5Q96-560 126-629.5q30-69.5 82.5-122T330.96-834q69.96-30 149.5-30t149.04 30q69.5 30 122 82.5T834-629.28q30 69.73 30 149Q864-401 834-331t-82.5 122.5Q699-156 629.28-126q-69.73 30-149 30Zm-.28-72q130 0 221-91t91-221q0-130-91-221t-221-91q-130 0-221 91t-91 221q0 130 91 221t221 91Zm0-312Z"/></svg>
+          <div class="w-96 h-28 bg-white border-4 border-red-300 indent-5 flex justify-center px-4 py-4 rounded-xl absolute 2xl:right-6 2xl:-top-24 ring-2 ring-inset ring-offset-2 ring-red-500 hidden peer-hover:block xl:peer-focus:block font-bold xl:right-6 xl:-top-28">After merging departments, the remaining deployed units of those departments will be returned to available units.</div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4 ">
+            <input type="text" class=" ring-2 ring-slate-300 col-span-3 py-1 rounded-md px-2" name="mergeDept" id="mergeDept" required placeholder="Add new department name">
+            <button class=" shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded bg-yellow-800 font-bold text-white border-yellow-600 border hover:bg-white hover:text-yellow-800 hover:border-yellow-800 hover:shadow-[2px_2px_0px_0px_rgba(133,77,14,1)] transition-ease-in duration-300">Merge</button>
+          </div>
+      </form>
+    </div>
+    
+    <div class="col-start-2 row-span-2 row-start-3 bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] p-2 grid   content-center"> 
+      <div class=" 2xl:h-[235px] xl:h-[258px] w-full flex flex-col">
+        <div class="  flex justify-between items-center"  >
+          <h1 class="ps-2 2xl:text-lg font-bold">History</h1>
+          <form action="">
+            <input type="text" name="search" id="search" placeholder="Enter Username" class="ring-2 ring-slate-300 px-2 py-1 rounded-md">
+          </form>
+        </div>
+        <div class=" h-full overflow-y-auto mt-2 flex flex-col ">
+          <% for(let history of histories)  { %>
+              <div class="flex justify-between px-4 py-2 odd:bg-gray-100 historyDetails" data-history-id="<%=history._id %>">
+                  <p class=" w-40 ">
+                    <% if(history.action === 'add') { %>
+                      Add Department
+                    <% } %>
+                    <% if(history.action === 'update') { %>
+                      Edit Department
+                    <% } %>
+                    <% if(history.action === 'merge') { %>
+                      Merge Department
+                    <% } %>
+                    <% if(history.action === 'delete') { %>
+                      Delete Department
+                    <% } %>
+                  </p>
+                  <p class="w-32 text-center "><%= history.user.username %></p>
+                  <p class=" w-24 text-center"><%= history.createdAt.getMonth() + 1 + '/' + history.createdAt.getDate() + '/' + history.createdAt.getFullYear() %></p>
+                  <div>
+                    <button class="border px-2 historyDetailsButton border-green-300 bg-green-500 font-bold text-white rounded shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-green-500 hover:shadow-[2px_2px_0px_0px_rgba(34,197,94,1)] duration-300 transition-ease-in">Details</button>
+                  </div>
+              </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-start-2 row-start-5 bg-white rounded-xl flex items-center justify-center shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)]"> 
+      <form class="flex flex-col gap-1 justify-center h-full  "  novalidate id="saveNewNameDept">
+        <p class="text-left  text-lg font-bold" id="editTitle">
+          Edit Department <span class="text-red-500 font-semibold text-xs hidden" id="selectDepartmentError">Please select department to update!</span>
+        </p>
+
+        <div class="flex gap-3">
+          <div>
+            <p class="xl:text-base 2xl:text-sm font-semibold after:ps-2 after:text-red-500" id="fromDept">FROM</p>
+            <div id="prevNameDept" class="p-2 2xl:w-60 xl:w-48 xl:h-10 bg-gray-100 2xl:h-10 rounded  xl:w-68 ring-2 ring-slate-300"></div>
+          </div>
+  
+          <div>
+            <p class="xl:text-base 2xl:text-sm font-semibold after:ps-2 after:text-red-500" id="toDept">TO</p>
+            <div class="flex gap-4">
+              <input type="text" name="newNameDept" id="newNameDept" class="ring-2 ring-slate-300 rounded px-2 xl:text-sm 2xl:w-60 xl:w-48" placeholder="New name" required>
+              <button class="p-2  shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]  rounded bg-orange-500 font-bold text-white border-orange-300 border hover:bg-white hover:text-orange-500 hover:border-orange-500 hover:shadow-[2px_2px_0px_0px_rgba(246,115,22,1)] transition-ease-in duration-300" id="updateButton">Submit</button>
+            </div>
+          </div>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="/js/departmentEdit.js"></script>
+</main>
